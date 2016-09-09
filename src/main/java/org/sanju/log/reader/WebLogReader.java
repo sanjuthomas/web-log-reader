@@ -26,7 +26,7 @@ public class WebLogReader{
 		if(args.length == 1){
 			uri = args[0];
 		}else{
-			System.out.println("Usage : org.sanju.log.streamer.WebLogReader <<URI>>");
+			System.out.println("Usage : org.sanju.log.streamer.WebLogReader <<URL>>");
 			System.exit(0);
 		}
 
