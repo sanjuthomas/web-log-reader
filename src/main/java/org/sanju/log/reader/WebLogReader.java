@@ -1,11 +1,12 @@
 package org.sanju.log.reader;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.net.URI;
+import java.io.InputStreamReader;
+import java.net.Authenticator;
+import java.net.PasswordAuthentication;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 /**
  * @author Sanju Thomas
@@ -14,6 +15,12 @@ import java.net.URISyntaxException;
 public class WebLogReader{
 
 	public static void main(final String[] args) throws URISyntaxException, IOException, InterruptedException {
+		
+		Authenticator.setDefault(new Authenticator(){
+			protected PasswordAuthentication getPasswordAuthentication(){
+				return new PasswordAuthentication("admin", "admin".toCharArray());
+			}
+		});
 
 		String uri = null;
 		if(args.length == 1){
@@ -23,10 +30,10 @@ public class WebLogReader{
 			System.exit(0);
 		}
 
-		final URI uriObject = new URI(uri);
+		final URL uriObject = new URL(uri);
 		BufferedReader reader = null;
 		try {
-			reader = new BufferedReader(new FileReader(new File(uriObject)));
+			reader = new BufferedReader(new InputStreamReader(uriObject.openStream()));
 			while(true){
 				final String line = reader.readLine();
 				if(null == line){
@@ -41,4 +48,3 @@ public class WebLogReader{
 		}
 	}
 }
-
